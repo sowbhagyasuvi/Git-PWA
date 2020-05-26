@@ -1,0 +1,68 @@
+<html>
+<head>
+	<title>Welcome to Github</title>
+	<link rel="manifest" href="manifest.json">
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+
+<script>
+        function getData() {
+            var uid = document.getElementById('guid').value;
+            fetch('https://api.github.com/users/' + uid)
+                .then((response) => {
+                    return response.json();
+                })
+                .then((data) => {
+                    console.log(data);
+                    if (data.message !== 'Not Found') {
+                        document.getElementById('msg').style.visibility = 'hidden';
+                        document.getElementById('gtable').style.visibility = 'visible';
+                        document.getElementById('gid').innerHTML = data.id;
+                        document.getElementById('glogin').innerHTML = data.login;
+                        document.getElementById('guser').innerHTML = data.name;
+                        document.getElementById('gprofile').innerHTML = data.html_url;
+                    } else {
+                        document.getElementById('gtable').style.visibility = 'hidden';
+                        document.getElementById('msg').style.visibility = 'visible';
+                    }
+                })
+                .catch((err) => {
+                    console.log('error ', err);
+                });
+        }
+    </script>
+
+
+</head>
+<body class="green accent-2">
+    <div style="background-image: url('2.jpg');">
+    <div class="icons"><center><h1>
+	<a href="#"><i class="fab fa-github"></i></a>
+    </h1></center></div>
+   <h1><center><label for="uname">Enter username</h1></center></label>
+    <h1><center><input type="text" id="uname" required/></h1></center><br>
+    <center><button id="fetch_user" class="btn red">Submit</button></center>
+	<div id="profilecard">
+		<img id="gitImg" style="width:500px; margin-top: 10px;">
+		<h4 id="gitName"></h4>
+		<p id="gitBio"></p>
+		<p class="center-align" id="gitRepo"></p>
+		<p id="gitLoc"></p>
+	</div>
+	
+	<script>
+        if('serviceWorker' in navigator){
+            try{
+                navigator.serviceWorker.register('serviceworker.js')
+                    .then(registration => {
+                        console.log('service worker registered');
+                })
+            }
+            catch (err){
+                console.log(err);
+            }
+        }    
+    </script>
+    <script src="main.js"></script>
+</body>
+</html>
